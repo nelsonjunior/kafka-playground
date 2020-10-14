@@ -21,4 +21,9 @@ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic LOJA_NOV
 
 Para ler do inicio adicionar --from-beginning
 
+Alterar topic
 
+bin/kafka-topics.sh --alter --zookeeper localhost:2181 --topic ECOMMERCE_SEND_EMAIL --partitions 3
+
+Descreve situação grupos
+bin/kafka-consumer-groups.sh --all-groups --bootstrap-server localhost:9092 --describe
