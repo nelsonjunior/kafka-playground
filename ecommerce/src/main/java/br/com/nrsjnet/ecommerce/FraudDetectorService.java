@@ -2,15 +2,18 @@ package br.com.nrsjnet.ecommerce;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
+import java.util.Map;
+
 public class FraudDetectorService {
 
     public static void main(String[] args) {
-        try (var service = new KafkaService(FraudDetectorService.class.getName(), "ECOMMERCE_SEND_EMAIL", FraudDetectorService::parse)) {
+        try (var service = new KafkaService<Order>(FraudDetectorService.class.getName(),
+                "ECOMMERCE_NEW_ORDER", FraudDetectorService::parse, Order.class, Map.of())) {
             service.run();
         }
     }
 
-    private static void parse(ConsumerRecord<String, String> record) {
+    private static void parse(ConsumerRecord<String, Order> record) {
         System.out.println("------------------------------------------");
         System.out.println("Processing new order, checking for fraud");
         System.out.println(record.key());
